@@ -1,5 +1,6 @@
 const express = require('express'); // Importando express.
 const mongoose = require('mongoose'); // Importando mongoose.
+const cors = require('cors');
 
 const routes = require('./routes');
 
@@ -10,6 +11,7 @@ mongoose.connect('mongodb://localhost:27017/omnistack10', {
   useUnifiedTopology: true
 });
 
+app.use(cors()); // Liberando acesso para todas aplicações externas consumirem a API.
 app.use(express.json()); // Fazendo com que requisições JSON sejam entendidas pela aplicação.
 app.use(routes); // Fazendo com que o servidor utilize as rotas.
 
