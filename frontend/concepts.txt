@@ -1,0 +1,12 @@
+ -> Principais conceitos dentro do React <-
+
+ - Componente: Componentes são funções que retornam JSX: (JavaScript + HTML).
+ Também podem ser entendidos como blocos de código HTML, CSS e JS isolados, os quais não vão interferir no restante da aplicação.
+
+ - Propriedade: São como os atributos com as tags HTML, as propriedades são os atributos dos componentes.
+ É possível ter acesso as propriedades passadas como parâmetros do componente, tendo em vista que todo componente é uma função, que recebe as propriedades como parâmetros.
+ Informações que o componente PAI (componente que chama) passa para o componente FILHO (componente que é chamado).
+
+ - Estado: Informações que um componente vai manipular.
+ Informações mantidas pelo componente.
+ LEMBRAR: Imutabilidade: Nunca alterar um dado existente, mas criar um novo dado em cima do dado anterior.
