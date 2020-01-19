@@ -9,8 +9,7 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
-  Keyboard,
-  TouchableWithoutFeedback
+  Keyboard
 } from 'react-native';
 import MapView, {
   Marker, // Marcar coisas no mapa.
@@ -25,14 +24,16 @@ import {
 } from '@expo/vector-icons';
 
 import api from '../services/api';
+import { connect, disconnect, subscribeToNewDevs } from '../services/socket';
 
 // Propriedade 'navigation' vem quando utilizamos essa função nas rotas com o 'createStackNavigation'.
 export default function Main({ navigation }) {
   const [currentRegion, setCurrentRegion] = useState(null);
   const [devs, setDevs] = useState([]);
   const [techs, setTechs] = useState('');
-  const [keyboardON, setKeyboardON] = useState(false);
-  const [keyboardSize, setKeyboardSize] = useState(0);
+  // Estados para controle do teclado:
+  const [keyboardON, setKeyboardON] = useState(false); // Saber se o teclado está em tela ou não.
+  const [keyboardSize, setKeyboardSize] = useState(0); // Armazenar o tamanho do teclado.
 
   // Função que executa algo quando algum parâmetro foi alterado.
   useEffect(() => {
@@ -57,7 +58,23 @@ export default function Main({ navigation }) {
     }
 
     loadIniticalPosition();
-  }, []); // Como o array está vazio, a função só vai
+  }, []); // Como o array está vazio, a função só vai ser executada uma vez, quando o componente for rodado em tela.
+
+  useEffect(() => {
+    subscribeToNewDevs(dev => setDevs([...devs, dev]));
+  }, [devs]);
+
+  function setupWebSocket() {
+    disconnect();
+
+    const { latitude, longitude } = currentRegion;
+
+    connect(
+      latitude,
+      longitude,
+      techs
+    );
+  }
 
   async function loadDevs() {
     const { latitude, longitude } = currentRegion;
@@ -72,6 +89,7 @@ export default function Main({ navigation }) {
     });
 
     setDevs(response.data.devs);
+    setupWebSocket();
   }
 
   // Quando o teclado aparecer ele vai setar o estado de 'keyboardON' e a altura no 'setKeyboardSize'.

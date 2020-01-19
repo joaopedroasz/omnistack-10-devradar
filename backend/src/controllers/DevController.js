@@ -3,6 +3,10 @@ const axios = require('axios');
 const Dev = require('../models/Dev');
 
 const parseStringAsArray = require('../utils/parseStringAsArray');
+const {
+  findConnections,
+  sendMessage
+} = require('../websocket');
 
 // Métodos de um controller:
 // index -> Retorna uma lista dos recursos disponíveis. (Nesse caso, todos os Devs cadastrados)
@@ -36,8 +40,8 @@ module.exports = {
 
       const {
         name = login, // Colocando uma valor padrão para 'name'. Se o 'response.data' não retornar 'name' ele vai pegar o 'login'.
-        avatar_url,
-        bio
+          avatar_url,
+          bio
       } = response.data;
 
       // Pegando as tecnologias informadas pelo usuário e dividindo em um array ( techs.split(',') ).
@@ -58,6 +62,15 @@ module.exports = {
         techs: techsArray,
         location
       });
+
+      // Filtrar as conexões que estão no máximo 10KM de distância
+      // e que o novo dev tenha pelo menos uma das tecnologias pesquisadas.
+      const sendSocketMessageTo = findConnections({
+        latitude,
+        longitude
+      }, techsArray);
+
+      sendMessage(sendSocketMessageTo, 'new-dev', dev);
     }
 
     return res.json(dev);
