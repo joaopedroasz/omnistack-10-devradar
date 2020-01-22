@@ -20,7 +20,10 @@ const routes = Router();
 
 // Rotas dos devs:
 routes.get('/devs', DevController.index);
+routes.get('/dev', DevController.show);
 routes.post('/devs', DevController.store);
+routes.put('/dev/:_id', DevController.update);
+routes.delete('/dev/:_id', DevController.destroy);
 
 // Rotas de procura de devs:
 routes.get('/devs/search', SearchController.index);

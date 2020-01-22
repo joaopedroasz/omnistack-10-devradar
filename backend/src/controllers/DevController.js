@@ -22,6 +22,21 @@ module.exports = {
     return res.json(devs);
   },
 
+  async show(req, res) {
+    const {
+      name
+    } = req.query;
+
+    const dev = await Dev.find({
+      name: {
+        $regex: name,
+        $options: 'i'
+      }
+    });
+
+    return res.json(dev);
+  },
+
   async store(req, res) {
     const {
       github_username,
@@ -40,8 +55,8 @@ module.exports = {
 
       const {
         name = login, // Colocando uma valor padrão para 'name'. Se o 'response.data' não retornar 'name' ele vai pegar o 'login'.
-          avatar_url,
-          bio
+        avatar_url,
+        bio
       } = response.data;
 
       // Pegando as tecnologias informadas pelo usuário e dividindo em um array ( techs.split(',') ).
@@ -74,5 +89,35 @@ module.exports = {
     }
 
     return res.json(dev);
+  },
+
+  async update(req, res) {
+    const {
+      _id
+    } = req.params;
+
+    const dev = await Dev.findById(_id);
+
+    if (!dev) {
+      return res.status(404).json({ error: 'Dev not found' });
+    }
+
+    const devUpdated = await Dev.findByIdAndUpdate(_id, req.body, {
+      new: true
+    });
+
+    return res.json(devUpdated);
+  },
+
+  async destroy(req, res) {
+    const { _id } = req.params;
+
+    const dev = await Dev.findById(_id);
+
+    if (!dev) {
+      return res.status(404).json({ error: 'Dev not found' });
+    }
+
+    return res.json({ succeeded: 'Dev deleted' });
   }
 };
