@@ -50,3 +50,37 @@ li.dev-item a {
 li.dev-item a:hover {
   color: #5A2EA6;
 }
+
+li.dev-item .footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li.dev-item .footer button {
+  padding: 6px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #FFF;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+li.dev-item .footer button.edit {
+  margin-right: 4px;
+  background: #8E4DFF;
+}
+
+li.dev-item .footer button.edit:hover {
+  background: #5A2EA6;
+}
+
+li.dev-item .footer button.delete {
+  background: #CCC;
+}
+
+li.dev-item .footer button.delete:hover {
+  background: #AAA;
+}

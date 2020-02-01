@@ -2,7 +2,7 @@ import React from 'react';
 
 import './styles.css';
 
-function DevItem({ dev }) {
+function DevItem({ dev, handleEditDev }) {
   return (
     <li className="dev-item">
       <header>
@@ -13,7 +13,12 @@ function DevItem({ dev }) {
         </div>
       </header>
       <p className="bio">{dev.bio}</p>
-      <a href={`https://github.com/${dev.github_username}`}>Acessar perfil no github</a>
+      <div className="footer">
+        <a href={`https://github.com/${dev.github_username}`}>Acessar perfil no github</a>
+        <div className="buttons">
+          <button className="edit" onClick={() => handleEditDev(dev._id)}>Editar</button>
+        </div>
+      </div>
     </li>
   );
 }

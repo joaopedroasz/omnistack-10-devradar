@@ -15,7 +15,7 @@ function DevForm({ onSubmit }) {
   useEffect(() => {
     // Essa função retorna uma callback, que são duas funções, uma se a pesquisa pela localização deu certo, outra se deu errado.
     navigator.geolocation.getCurrentPosition(
-      // Função caso o 
+      // Função caso a posição for pega com sucesso:
       (position) => {
         const { latitude, longitude } = position.coords;
         // Setando os estados 'Latitude' e 'Longitude'.
