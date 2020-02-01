@@ -2,8 +2,8 @@
 // Possibilidade do backend enviar informações para o front sem necessariamente precisar de uma requisisão.
 const socketio = require('socket.io');
 
-const parseStringAsArray = require('./utils/parseStringAsArray');
-const calculateDistance = require('./utils/calculateDistance');
+const parseStringAsArray = require('./controllers/utils/parseStringAsArray');
+const calculateDistance = require('./controllers/utils/calculateDistance');
 
 const connections = []; // Armazenar as conexões.
 let io;
@@ -34,7 +34,7 @@ module.exports.setupWebsocket = (server) => {
 
 module.exports.findConnections = (coordinates, techs) => {
   return connections.filter(connection => {
-    // Comparando se as coordenadas passadas e as coordenadas das conexões existentes tem uma diferença de até 10KM.
+    // Comparando se as coordenadas passadas e as coordenadas das conexões existentes tem uma diferença de até 20KM.
     return calculateDistance(coordinates, connection.coordinates) < 20
       // Vendo se as tecnologas dos usuários incluem pelo menos uma tecnologia pesquisada.
       &&

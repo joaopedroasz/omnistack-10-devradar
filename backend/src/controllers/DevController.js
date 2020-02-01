@@ -2,7 +2,7 @@ const axios = require('axios');
 
 const Dev = require('../models/Dev');
 
-const parseStringAsArray = require('../utils/parseStringAsArray');
+const parseStringAsArray = require('../controllers/utils/parseStringAsArray');
 const {
   findConnections,
   sendMessage
@@ -24,15 +24,10 @@ module.exports = {
 
   async show(req, res) {
     const {
-      name
+      _id
     } = req.query;
 
-    const dev = await Dev.find({
-      name: {
-        $regex: name,
-        $options: 'i'
-      }
-    });
+    const dev = await Dev.findById(_id);
 
     return res.json(dev);
   },
@@ -55,8 +50,8 @@ module.exports = {
 
       const {
         name = login, // Colocando uma valor padrão para 'name'. Se o 'response.data' não retornar 'name' ele vai pegar o 'login'.
-        avatar_url,
-        bio
+          avatar_url,
+          bio
       } = response.data;
 
       // Pegando as tecnologias informadas pelo usuário e dividindo em um array ( techs.split(',') ).
@@ -99,7 +94,9 @@ module.exports = {
     const dev = await Dev.findById(_id);
 
     if (!dev) {
-      return res.status(404).json({ error: 'Dev not found' });
+      return res.status(404).json({
+        error: 'Dev not found'
+      });
     }
 
     const devUpdated = await Dev.findByIdAndUpdate(_id, req.body, {
@@ -110,14 +107,20 @@ module.exports = {
   },
 
   async destroy(req, res) {
-    const { _id } = req.params;
+    const {
+      _id
+    } = req.params;
 
-    const dev = await Dev.findById(_id);
+    const dev = await Dev.findByIdAndDelete(_id);
 
     if (!dev) {
-      return res.status(404).json({ error: 'Dev not found' });
+      return res.status(404).json({
+        error: 'Dev not found'
+      });
     }
 
-    return res.json({ succeeded: 'Dev deleted' });
+    return res.json({
+      succeeded: 'Dev deleted'
+    });
   }
 };

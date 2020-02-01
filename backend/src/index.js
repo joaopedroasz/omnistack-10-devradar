@@ -13,7 +13,9 @@ setupWebsocket(server); // Enviando o servidor HTTP para as configurações com 
 
 mongoose.connect('mongodb://localhost:27017/omnistack10', {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false
 });
 
 app.use(cors()); // Liberando acesso para todas aplicações externas consumirem a API.
