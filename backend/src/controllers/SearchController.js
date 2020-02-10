@@ -22,7 +22,7 @@ module.exports = {
             type: 'Point',
             coordinates: [longitude, latitude]
           },
-          $maxDistance: 10000 // Procurando desenvolvedores até 100Km da minha localização.
+          $maxDistance: 100000 // Procurando desenvolvedores até 100Km da minha localização.
         }
       }
     });

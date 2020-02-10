@@ -91,6 +91,14 @@ module.exports = {
       _id
     } = req.params;
 
+    const {
+      name,
+      bio,
+      techs
+    } = req.body;
+
+    const techsArray = parseStringAsArray(techs);
+
     const dev = await Dev.findById(_id);
 
     if (!dev) {
@@ -99,7 +107,11 @@ module.exports = {
       });
     }
 
-    const devUpdated = await Dev.findByIdAndUpdate(_id, req.body, {
+    const devUpdated = await Dev.findByIdAndUpdate(_id, {
+      name,
+      bio,
+      techs: techsArray
+    }, {
       new: true
     });
 
