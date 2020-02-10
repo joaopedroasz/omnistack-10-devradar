@@ -22,7 +22,7 @@
 <br>
 
 ## 🌎 Visão Geral:
-O DevRadar é um projeto com que tem o intuito de conectar desenvolvedores com base na localização e na proximidade entre os mesmos.
+O DevRadar é um projeto com que tem o intuito de conectar desenvolvedores com base nas tecnologias usadas e na proximidade entre os mesmos.
 
 <br>
 
